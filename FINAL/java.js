@@ -1,123 +1,111 @@
-var flag, exp, pass, ans;
-function myFunctionOn() {
-    var x = document.getElementById("back");
-    x.style.display = "block";
+let display = document.getElementById("display");
+let historyList = document.getElementById("historyList");
+
+function append(value) {
+  display.value += value;
 }
 
-function myFunctionOff() {
-    var x = document.getElementById("back");
-    x.style.display = "none";
+function clearDisplay() {
+  display.value = "";
 }
 
-function insert(num) {
-    document.form.textview.value = document.form.textview.value + num;
-}
-function equal(flag, pass) {
-    if (flag == 1)
-        SciCalc(pass);
-    else {
-        exp = document.form.textview.value;
-        document.form.textview.value = eval(exp) + ' ';
-        exp = '';
-    }
-}
-function clean() {
-    document.form.textview.value = "";
-    flag = '', exp = '', pass = '', ans = '';
-}
-function back() {
-    exp = document.form.textview.value;
-    document.form.textview.value = exp.substring(0, exp.length - 1);
-}
-function SciDisplay(arg) {
-    flag = 1;
-    if (arg == 0) {
-        document.form.textview.value = 'sin ';
-        pass = 0;
-    }
-    else if (arg == 1) {
-        document.form.textview.value = 'cos ';
-        pass = 1;
-    }
-    else if (arg == 2) {
-        document.form.textview.value = 'tan ';
-        pass = 2;
-    }
-    else if (arg == 3) {
-        document.form.textview.value = 'ln ';
-        pass = 3;
-    }
-    else if (arg == 4) {
-        document.form.textview.value = 'log ';
-        pass = 4;
-    }
-    else if (arg == 5) {
-        document.form.textview.value = '√ ';
-        pass = 5;
-    }
-    else if (arg == 6) {
-        document.form.textview.value = document.form.textview.value + ' %';
-        pass = 6;
-    }
-    else if (arg == 7) {
-        document.form.textview.value = document.form.textview.value + '!';
-        pass = 7;
-    }
-    else if (arg == 8) {
-        document.form.textview.value = document.form.textview.value + ' ^ ';
-        pass = 8;
-    }
-}
-function SciCalc(pass) {
-    exp = document.form.textview.value;
-    ans = exp.substring(4);
-    if (pass == 0) {
-        ans = eval(ans);
-        ans = ans * ((3.14159265359) / 180);
-        document.form.textview.value = Math.sin(ans);
-    }
-    else if (pass == 1) {
-        ans = eval(ans);
-        ans = ans * ((3.14159265359) / 180);
-        document.form.textview.value = Math.cos(ans);
-    }
-    else if (pass == 2) {
-        ans = eval(ans);
-        ans = ans * ((3.14159265359) / 180);
-        document.form.textview.value = Math.tan(ans);
-    }
-    else if (pass == 3) {
-        ans = exp.substring(3);
-        ans = eval(ans);
-        document.form.textview.value = Math.log(ans);
-    }
-    else if (pass == 4) {
-        ans = eval(ans);
-        document.form.textview.value = (Math.log(ans)) / 2.303;
-    }
-    else if (pass == 5) {
-        ans = exp.substring(2);
-        ans = eval(ans);
-        document.form.textview.value = Math.sqrt(ans);
-    }
-    else if (pass == 6) {
-        ans = exp.substring(0, (exp.length - 2));
-        document.form.textview.value = (eval(ans) * 100) + ' %';
-    }
-    else if (pass == 7) {
-        ans = exp.substring(0, (exp.length - 1));
-        document.form.textview.value = factorial(eval(ans));
-    }
-    else if (pass == 8) {
-        var index = exp.indexOf('^');
-        var base = exp.substring(0, index - 1);
-        var expo = exp.substring(index + 2);
-        document.form.textview.value = Math.pow(eval(base), eval(expo));
-    }
-    exp = '';
-    ans = '';
+function deleteChar() {
+  display.value = display.value.slice(0, -1);
 }
 
-function factorial(ans) {
-    return ans ? ans * factorial(ans - 1) : 1;
+function calculate() {
+  try {
+    let expression = display.value;
+    let result = eval(expression);
+    display.value = result;
+    updateHistory(expression, result);
+  } catch (e) {
+    display.value = "Error";
+  }
+}
+
+function updateHistory(expression, result) {
+  const li = document.createElement("li");
+  li.textContent = `${expression} = ${result}`;
+  historyList.prepend(li); // newest at top
+
+  if (historyList.childNodes.length > 10) {
+    historyList.removeChild(historyList.lastChild);
+  }
+}
+
+function sinFunc() {
+  let val = parseFloat(display.value);
+  if (!isNaN(val)) {
+    let res = Math.sin((val * Math.PI) / 180);
+    updateHistory(`sin(${val})`, res);
+    display.value = res;
+  }
+}
+
+function cosFunc() {
+  let val = parseFloat(display.value);
+  if (!isNaN(val)) {
+    let res = Math.cos((val * Math.PI) / 180);
+    updateHistory(`cos(${val})`, res);
+    display.value = res;
+  }
+}
+
+function tanFunc() {
+  let val = parseFloat(display.value);
+  if (!isNaN(val)) {
+    let res = Math.tan((val * Math.PI) / 180);
+    updateHistory(`tan(${val})`, res);
+    display.value = res;
+  }
+}
+
+function logFunc() {
+  let val = parseFloat(display.value);
+  if (!isNaN(val)) {
+    let res = Math.log10(val);
+    updateHistory(`log(${val})`, res);
+    display.value = res;
+  }
+}
+
+function lnFunc() {
+  let val = parseFloat(display.value);
+  if (!isNaN(val)) {
+    let res = Math.log(val);
+    updateHistory(`ln(${val})`, res);
+    display.value = res;
+  }
+}
+
+function sqrtFunc() {
+  let val = parseFloat(display.value);
+  if (!isNaN(val)) {
+    let res = Math.sqrt(val);
+    updateHistory(`√(${val})`, res);
+    display.value = res;
+  }
+}
+
+function squareFunc() {
+  let val = parseFloat(display.value);
+  if (!isNaN(val)) {
+    let res = Math.pow(val, 2);
+    updateHistory(`${val}²`, res);
+    display.value = res;
+  }
+}
+
+function factorialFunc() {
+  let val = parseInt(display.value);
+  if (!isNaN(val) && val >= 0) {
+    let res = factorial(val);
+    updateHistory(`${val}!`, res);
+    display.value = res;
+  }
+}
+
+function factorial(n) {
+  return n <= 1 ? 1 : n * factorial(n - 1);
 }
