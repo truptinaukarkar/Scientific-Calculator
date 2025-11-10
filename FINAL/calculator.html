@@ -1,93 +1,49 @@
 <!DOCTYPE html>
-<html lang='en'>
-
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Calculator 1234</title>
-    <link rel="stylesheet" href="style.css">
-    <script type="text/javascript" src="java.js"></script>
-    <link href="https://fonts.googleapis.com/css?family=Orbitron&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scientific Calculator</title>
+  <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-    <div class="bg">
-        <h1 id='aman' style="background-color: white; font-family: 'Orbitron', sans-serif; font-size: 20px; position: relative; transform: translateX(1480px) translateY(780px);">© AMAN MALAKAR</h1>
-        <div class="main">
-            <div id="front" class="div">
-                <form id=" form" name="form">
-                    <input class="textview" name="textview"
-                        style="text-align: right; font-family: 'Orbitron', sans-serif;">
-                </form>
-                <table class="grid" cellspacing="10">
-                    <tr>
-                        <td class="button1" type="button" onclick="insert(7)">7</td>
-                        <td class="button1" type="button" onclick="insert(8)">8</td>
-                        <td class="button1" type="button" onclick="insert(9)">9</td>
-                        <td class="button2" type="button" onclick="back()">⌫</td>
-                    </tr>
-                    <tr>
-                        <td class="button1" type="button" onclick="insert(4)">4</td>
-                        <td class="button1" type="button" onclick="insert(5)">5</td>
-                        <td class="button1" type="button" onclick="insert(6)">6</td>
-                        <td class="button2" type="button" onclick="insert('/')">÷</td>
-                    </tr>
-                    <tr>
-                        <td class="button1" type="button" onclick="insert(1)">1</td>
-                        <td class="button1" type="button" onclick="insert(2)">2</td>
-                        <td class="button1" type="button" onclick="insert(3)">3</td>
-                        <td class="button2" type="button" onclick="insert('*')">X</td>
-                    </tr>
-                    <tr>
-                        <td class="button1" type="button" onclick="insert(0)">0</td>
-                        <td class="button1" type="button" onclick="insert('.')">.</td>
-                        <td class="button5" type="button" onclick="equal(flag,pass)">=</td>
-                        <td class="button2" type="button" onclick="insert('-')">-</td>
-                    </tr>
-                    <tr>
-                        <td colspan="2" class="button3" type="button" onclick="myFunctionOn()">SCI-MODE:OFF</td>
-                        <td class="button2" type="button" onclick="clean()">C</td>
-                        <td class="button2" type="button" onclick="insert('+')">+</td>
-                    </tr>
-                </table>
-            </div>
+  <div class="container">
+    <div class="calculator">
+      <input type="text" id="display" readonly />
 
-            <div id="back" class="div">
-                <table cellspacing="10">
-                    <tr>
-                        <td class="button4" type="button" onclick="SciDisplay(0)">sin</td>
-                        <td class="button4" type="button" onclick="SciDisplay(1)">cos</td>
-                        <td class="button4" type="button" onclick="SciDisplay(2)">tan</td>
-                        <td class="button2" type="button" onclick="back()">⌫</td>
-                    </tr>
-                    <tr>
-                        <td class="button4" type="button" onclick="SciDisplay(3)">ln</td>
-                        <td class="button4" type="button" onclick="SciDisplay(4)">log</td>
-                        <td class="button4" type="button" onclick="SciDisplay(5)">√</td>
-                        <td class="button2" type="button" onclick="insert('/')">÷</td>
-                    </tr>
-                    <tr>
-                        <td class="button4" type="button" onclick="SciDisplay(6)">%</td>
-                        <td class="button4" type="button" onclick="SciDisplay(7)">!</td>
-                        <td class="button4" type="button" onclick="SciDisplay(8)">^</td>
-                        <td class="button2" type="button" onclick="insert('*')">X</td>
-                    </tr>
-                    <tr>
-                        <td class="button4" type="button" onclick="insert('(')">(</td>
-                        <td class="button4" type="button" onclick="insert(')')">)</td>
-                        <td class="button5" type="button" onclick="equal(flag,pass)">=</td>
-                        <td class="button2" type="button" onclick="insert('-')">-</td>
-                    </tr>
-                    <tr>
-                        <td colspan="2" class="button3" type="button" onclick="myFunctionOff()">SCI-MODE:ON</td>
-                        <td class="button2" type="button" onclick="clean()">C</td>
-                        <td class="button2" type="button" onclick="insert('+')">+</td>
-                    </tr>
-                </table>
-            </div>
-        </div>
+      <div class="buttons">
+        <button onclick="clearDisplay()">C</button>
+        <button onclick="deleteChar()">⌫</button>
+        <button onclick="append('%')">%</button>
+        <button onclick="append('/')">÷</button>
+
+        <button onclick="append('7')">7</button>
+        <button onclick="append('8')">8</button>
+        <button onclick="append('9')">9</button>
+        <button onclick="append('*')">×</button>
+
+        <button onclick="append('4')">4</button>
+        <button onclick="append('5')">5</button>
+        <button onclick="append('6')">6</button>
+        <button onclick="append('-')">−</button>
+
+        <button onclick="append('1')">1</button>
+        <button onclick="append('2')">2</button>
+        <button onclick="append('3')">3</button>
+        <button onclick="append('+')">+</button>
+
+        <button onclick="append('0')">0</button>
+        <button onclick="append('.')">.</button>
+        <button onclick="calculate()">=</button>
+      </div>
     </div>
-</body>
+      
+    <div class="history-panel" id="historyPanel">
+      <h3>History</h3>
+      <ul id="historyList"></ul>
+    </div>
+  </div>
 
+  <script src="script.js"></script>
+</body>
 </html>
